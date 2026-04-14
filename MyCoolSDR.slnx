@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="MyCoolSDR.Test/MyCoolSDR.Test.csproj" Id="557a7acc-0a5c-45bf-a005-d274ec317957" />
+  <Project Path="MyCoolSDR/MyCoolSDR.csproj" />
+</Solution>

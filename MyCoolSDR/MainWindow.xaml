@@ -1,0 +1,58 @@
+﻿<Window x:Class="MyCoolSDR.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:MyCoolSDR"
+        xmlns:conv="clr-namespace:MyCoolSDR.Converters"
+        Title="My Cool SDR - TCP Data Parser" Height="500" Width="900"
+        Loaded="Window_Loaded"
+        Background="#F0F0F0">
+    <Window.Resources>
+        <conv:HzToMhzConverter x:Key="HzToMhzConverter"/>
+        <conv:HzToKhzConverter x:Key="HzToKhzConverter"/>
+        <conv:UInt64TimestampToDateTime x:Key="UInt64TimestampToDateTime"/>
+    </Window.Resources>
+    <Grid>
+        <StackPanel Margin="15">
+            <TextBlock Text="TCP Data Parser" FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
+            
+            <Button x:Name="FetchDataButton" 
+                    Content="Fetch Data from TCP Server" 
+                    Click="FetchData_Click" 
+                    Padding="12,8" 
+                    Margin="0,0,0,10"
+                    Background="#0078D4"
+                    Foreground="White"
+                    FontSize="12"
+                    FontWeight="SemiBold"/>
+            
+            <TextBlock x:Name="StatusText" 
+                       Text="Ready" 
+                       Foreground="#666" 
+                       Margin="0,0,0,10"/>
+            
+            <DataGrid ItemsSource="{Binding Results}" 
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      ColumnHeaderHeight="30"
+                      RowHeight="35">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Created On" 
+                                      Binding="{Binding CreatedOn, Converter={StaticResource UInt64TimestampToDateTime}}" 
+                                      Width="*"/>
+                    <DataGridTextColumn Header="Frequency, MHz" 
+                                      Binding="{Binding Frequency, Converter={StaticResource HzToMhzConverter}}" 
+                                      Width="*"/>
+                    <DataGridTextColumn Header="Bandwidth, kHz" 
+                                      Binding="{Binding Bandwidth, Converter={StaticResource HzToKhzConverter}}" 
+                                      Width="*"/>
+                    <DataGridTextColumn Header="SNR, db" 
+                                      Binding="{Binding SNR}" 
+                                      Width="*"/>
+                    <DataGridTextColumn Header="Count" 
+                                      Binding="{Binding Count}" 
+                                      Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>
